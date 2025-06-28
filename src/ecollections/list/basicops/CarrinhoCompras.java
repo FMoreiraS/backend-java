@@ -1,4 +1,4 @@
-package ecollections;
+package ecollections.list.basicops;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class CarrinhoCompras {
         if(!itemList.isEmpty()) {
             System.out.println("============== Itens no carrinho ==============");
             for(Item i : itemList) {
-                System.out.println(i.getQuantity() + " x " + i.getName() + " - R$ " + i.getPrice());
+                System.out.println(i.getQuantity() + " x " + i.getName() + " - R$ " + i.getPrice() + " / un.");
                 System.out.println("---------------------------------------------");
             }
         } else {

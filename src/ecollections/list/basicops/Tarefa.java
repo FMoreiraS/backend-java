@@ -1,4 +1,4 @@
-package ecollections;
+package ecollections.list.basicops;
 
 public class Tarefa {
   //atributo
