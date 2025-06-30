@@ -2,7 +2,7 @@ package ecollections.set.search;
 
 public class Tarefa {
     private String descricao;
-    private boolean status;
+    private char status = 'P';
 
     public Tarefa (String descricao) {
         this.descricao = descricao;
@@ -12,16 +12,16 @@ public class Tarefa {
         return descricao;
     }
 
-    public boolean getStatus() {
+    public char getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(char status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return descricao;
+        return descricao + " - status: " + status;
     }
 }
