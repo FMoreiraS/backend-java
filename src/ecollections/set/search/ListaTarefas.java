@@ -15,16 +15,21 @@ public class ListaTarefas {
     }
 
     public void removerTarefa(String descricao) {
+        Tarefa tarefaParaRemover = null;
         if (!tarefaSet.isEmpty()) {
             for (Tarefa t : tarefaSet) {
                 if (t.getDescricao().equalsIgnoreCase(descricao)) {
-                    tarefaSet.remove(t);
+                    tarefaParaRemover = t;
                     System.out.println("A tarefa " + t.getDescricao() + " foi removida.");
                     break;
                 }
             }
+            tarefaSet.remove(tarefaParaRemover);
         } else {
             System.out.println("A lista de tarefas está vazia.");
+        }
+        if (tarefaParaRemover == null) {
+            System.out.printf("A tarefa %s não está na lista.\n", descricao);
         }
     }
 
@@ -37,19 +42,14 @@ public class ListaTarefas {
     }
 
     public int contarTarefas() {
-        if (!tarefaSet.isEmpty()) {
-            return tarefaSet.size();
-        } else {
-            System.out.println("A lista de tarefas está vazia.");
-            return 0;
-        }
+        return tarefaSet.size();
     }
 
     public Set<Tarefa> obterTarefasConcluidas() {
         Set<Tarefa> tarefasConcluidas = new HashSet<>();
         if (!tarefaSet.isEmpty()) {
             for (Tarefa t : tarefaSet) {
-                if (t.getStatus() == 'C') {
+                if (t.getStatus()) {
                     tarefasConcluidas.add(t);
                 }
             }
@@ -63,7 +63,7 @@ public class ListaTarefas {
         Set<Tarefa> tarefasPendentes = new HashSet<>();
         if (!tarefaSet.isEmpty()) {
             for (Tarefa t : tarefaSet) {
-                if (t.getStatus() == 'P') {
+                if (!t.getStatus()) {
                     tarefasPendentes.add(t);
                 }
             }
@@ -76,9 +76,10 @@ public class ListaTarefas {
     public void marcarTarefaConcluida(String descricao) {
         if (!tarefaSet.isEmpty()) {
             for (Tarefa t : tarefaSet) {
-                if (t.getStatus() != 'C' && t.getDescricao().equalsIgnoreCase(descricao)) {
-                    t.setStatus('C');
+                if (!t.getStatus() && t.getDescricao().equalsIgnoreCase(descricao)) {
+                    t.setStatus(true);
                     System.out.println("A tarefa " + descricao + " foi marcada como concluída.");
+                    break;
                 }
             }
         } else {
@@ -89,9 +90,10 @@ public class ListaTarefas {
     public void marcarTarefaPendente(String descricao) {
         if (!tarefaSet.isEmpty()) {
             for (Tarefa t : tarefaSet) {
-                if (t.getStatus() != 'P' && t.getDescricao().equalsIgnoreCase(descricao)) {
-                    t.setStatus('P');
+                if (t.getDescricao().equalsIgnoreCase(descricao)) {
+                    t.setStatus(false);
                     System.out.println("A tarefa " + descricao + " foi marcada como pendente.");
+                    break;
                 }
             }
         } else {
@@ -100,14 +102,14 @@ public class ListaTarefas {
     }
 
     public void limparListaTarefas() {
-        tarefaSet.removeAll(tarefaSet);
+        tarefaSet.clear();
         System.out.println("A lista de tarefas está limpa.");
     }
-    /* marcarTarefaPendente(String descricao)
-     */
 
     public static void main(String[] args) {
         ListaTarefas listaTarefas = new ListaTarefas();
+
+        System.out.println("Quantidade de tarefas da lista: " + listaTarefas.contarTarefas());
 
         listaTarefas.adicionarTarefa("Arrumar o quarto");
         listaTarefas.adicionarTarefa("Estudar para a prova");
@@ -121,6 +123,7 @@ public class ListaTarefas {
         listaTarefas.removerTarefa("Banhar o cachorro");
         listaTarefas.exibirTarefas();
         System.out.println("A lista contém " + listaTarefas.contarTarefas() + " tarefa(s).");
+        listaTarefas.removerTarefa("Banhar o cachorro");
 
         listaTarefas.marcarTarefaPendente("Arrumar o quarto");
         listaTarefas.marcarTarefaPendente("Estudar para a prova");
